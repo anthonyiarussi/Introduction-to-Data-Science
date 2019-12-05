@@ -1,0 +1,1541 @@
+---
+redirect_from:
+  - "/mybook/lab3-transformation-students"
+interact_link: content/mybook/Lab3_Transformation_Students.ipynb
+kernel_name: ir
+has_widgets: false
+title: |-
+  Data Transformation Lab
+prev_page:
+  url: /mybook/Lab3_Intro.html
+  title: |-
+    Data Transformation
+next_page:
+  url: /mybook/Lab4_Intro.html
+  title: |-
+    Data Visualization
+suffix: .ipynb
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="NBA-Data-Transformation">NBA Data Transformation<a class="anchor-link" href="#NBA-Data-Transformation"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before you can work with the nba data set, you will need to load the R package that contains the tools for working with it.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the library() function to load the package. In this case, we have loaded the dplyr package for you.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Load the dplyr package</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Packages Loaded&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;Packages Loaded&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nba</span> <span class="o">=</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;all_seasons.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Look at the NBA data set</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">nba</span><span class="p">)</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">nba</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>X</th><th scope=col>player_name</th><th scope=col>team_abbreviation</th><th scope=col>age</th><th scope=col>player_height</th><th scope=col>player_weight</th><th scope=col>college</th><th scope=col>country</th><th scope=col>draft_year</th><th scope=col>draft_round</th><th scope=col>gp</th><th scope=col>pts</th><th scope=col>reb</th><th scope=col>ast</th><th scope=col>season</th></tr></thead>
+<tbody>
+	<tr><td>0                              </td><td>Chris Robinson                 </td><td>VAN                            </td><td>23                             </td><td>195.58                         </td><td> 90.7184                       </td><td>Western Kentucky               </td><td>USA                            </td><td>1996                           </td><td>2                              </td><td>41                             </td><td>4.6                            </td><td>1.7                            </td><td>1.6                            </td><td>1996-97                        </td></tr>
+	<tr><td>1                              </td><td>Matt Fish                      </td><td>MIA                            </td><td>27                             </td><td>210.82                         </td><td>106.5941                       </td><td>North Carolina-Wilmington      </td><td>USA                            </td><td>1992                           </td><td>2                              </td><td> 6                             </td><td>0.3                            </td><td>0.8                            </td><td>0.0                            </td><td>1996-97                        </td></tr>
+	<tr><td>2                              </td><td>Matt Bullard                   </td><td>HOU                            </td><td>30                             </td><td>208.28                         </td><td>106.5941                       </td><td>Iowa                           </td><td>USA                            </td><td>Undrafted                      </td><td>Undrafted                      </td><td>71                             </td><td>4.5                            </td><td>1.6                            </td><td>0.9                            </td><td>1996-97                        </td></tr>
+	<tr><td>3                              </td><td>Marty Conlon                   </td><td>BOS                            </td><td>29                             </td><td>210.82                         </td><td>111.1300                       </td><td>Providence                     </td><td>USA                            </td><td>Undrafted                      </td><td>Undrafted                      </td><td>74                             </td><td>7.8                            </td><td>4.4                            </td><td>1.4                            </td><td>1996-97                        </td></tr>
+	<tr><td>4                              </td><td>Martin Muursepp                </td><td>DAL                            </td><td>22                             </td><td>205.74                         </td><td>106.5941                       </td><td>None                           </td><td>USA                            </td><td>1996                           </td><td>1                              </td><td>42                             </td><td>3.7                            </td><td>1.6                            </td><td>0.5                            </td><td>1996-97                        </td></tr>
+	<tr><td>5                              </td><td>Martin Lewis                   </td><td>TOR                            </td><td>22                             </td><td>198.12                         </td><td>102.0582                       </td><td>Seward County Community College</td><td>USA                            </td><td>1995                           </td><td>2                              </td><td> 9                             </td><td>1.6                            </td><td>0.7                            </td><td>0.4                            </td><td>1996-97                        </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<ol class=list-inline>
+	<li>9561</li>
+	<li>15</li>
+</ol>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Understanding-NBA-data-frame">Understanding NBA data frame<a class="anchor-link" href="#Understanding-NBA-data-frame"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have loaded the nba data set, you can start examining and understanding it.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many observations (rows) are in the data set?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many variables (columns) are in the data set?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When looking back at the history of the NBA, a common argument is that the average player in today's NBA is bigger and stronger than the average player in past generations of the NBA. This argument is commonly brought up when comparing the talent of great players in the NBA today to legendary players in the NBA's past. Lucky for you, we have all of the necessary tools to see if this argument holds any truth to it! But first let us see how many total seasons our data set covers.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Instructions">Instructions<a class="anchor-link" href="#Instructions"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The nba data set covers from the <strong>___</strong> season to the <strong>___</strong> season?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># lists each unique season in the nba data set</span>
+<span class="nf">unique</span><span class="p">(</span><span class="n">nba</span><span class="o">$</span><span class="n">season</span><span class="p">)</span>
+<span class="c1">#from the 1996-97 season to the 2016-2017 season.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<ol class=list-inline>
+	<li>1996-97</li>
+	<li>1997-98</li>
+	<li>1998-99</li>
+	<li>1999-00</li>
+	<li>2000-01</li>
+	<li>2001-02</li>
+	<li>2002-03</li>
+	<li>2003-04</li>
+	<li>2004-05</li>
+	<li>2005-06</li>
+	<li>2006-07</li>
+	<li>2007-08</li>
+	<li>2008-09</li>
+	<li>2009-10</li>
+	<li>2010-11</li>
+	<li>2011-12</li>
+	<li>2012-13</li>
+	<li>2013-14</li>
+	<li>2014-15</li>
+	<li>2015-16</li>
+	<li>2016-17</li>
+</ol>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many seasons are in the nba data set?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Gives length of unique seasons in nba data set</span>
+<span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">nba</span><span class="o">$</span><span class="n">season</span><span class="p">))</span>
+<span class="c1">#21</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+21
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next let us look at the 'player_height' variable. We initially notice that the height is kept in centimeters, which is difficult to visualize. We will use the mutate function to create a new variable/column 'player_height_ft', which will be the player's height in feet. After doing a simple conversion from cm(2.54 cm per inch) to ft we find that by dividing cm by 30.48 we convert our measurement to feet.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nba</span> <span class="o">&lt;-</span> <span class="n">nba</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">player_height_ft</span> <span class="o">=</span> <span class="n">player_height</span><span class="o">/</span><span class="m">30.48</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">nba</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>X</th><th scope=col>player_name</th><th scope=col>team_abbreviation</th><th scope=col>age</th><th scope=col>player_height</th><th scope=col>player_weight</th><th scope=col>college</th><th scope=col>country</th><th scope=col>draft_year</th><th scope=col>draft_round</th><th scope=col>gp</th><th scope=col>pts</th><th scope=col>reb</th><th scope=col>ast</th><th scope=col>season</th><th scope=col>player_height_ft</th></tr></thead>
+<tbody>
+	<tr><td>0                              </td><td>Chris Robinson                 </td><td>VAN                            </td><td>23                             </td><td>195.58                         </td><td> 90.7184                       </td><td>Western Kentucky               </td><td>USA                            </td><td>1996                           </td><td>2                              </td><td>41                             </td><td>4.6                            </td><td>1.7                            </td><td>1.6                            </td><td>1996-97                        </td><td>6.416667                       </td></tr>
+	<tr><td>1                              </td><td>Matt Fish                      </td><td>MIA                            </td><td>27                             </td><td>210.82                         </td><td>106.5941                       </td><td>North Carolina-Wilmington      </td><td>USA                            </td><td>1992                           </td><td>2                              </td><td> 6                             </td><td>0.3                            </td><td>0.8                            </td><td>0.0                            </td><td>1996-97                        </td><td>6.916667                       </td></tr>
+	<tr><td>2                              </td><td>Matt Bullard                   </td><td>HOU                            </td><td>30                             </td><td>208.28                         </td><td>106.5941                       </td><td>Iowa                           </td><td>USA                            </td><td>Undrafted                      </td><td>Undrafted                      </td><td>71                             </td><td>4.5                            </td><td>1.6                            </td><td>0.9                            </td><td>1996-97                        </td><td>6.833333                       </td></tr>
+	<tr><td>3                              </td><td>Marty Conlon                   </td><td>BOS                            </td><td>29                             </td><td>210.82                         </td><td>111.1300                       </td><td>Providence                     </td><td>USA                            </td><td>Undrafted                      </td><td>Undrafted                      </td><td>74                             </td><td>7.8                            </td><td>4.4                            </td><td>1.4                            </td><td>1996-97                        </td><td>6.916667                       </td></tr>
+	<tr><td>4                              </td><td>Martin Muursepp                </td><td>DAL                            </td><td>22                             </td><td>205.74                         </td><td>106.5941                       </td><td>None                           </td><td>USA                            </td><td>1996                           </td><td>1                              </td><td>42                             </td><td>3.7                            </td><td>1.6                            </td><td>0.5                            </td><td>1996-97                        </td><td>6.750000                       </td></tr>
+	<tr><td>5                              </td><td>Martin Lewis                   </td><td>TOR                            </td><td>22                             </td><td>198.12                         </td><td>102.0582                       </td><td>Seward County Community College</td><td>USA                            </td><td>1995                           </td><td>2                              </td><td> 9                             </td><td>1.6                            </td><td>0.7                            </td><td>0.4                            </td><td>1996-97                        </td><td>6.500000                       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the average player height in feet in the nba data set.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Instructions">Instructions<a class="anchor-link" href="#Instructions"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we will work on testing the argument that current NBA players are bigger and stronger than past NBA players by looking at the average player height in ft grouped by season. Let us use the group_by() function to group by season and the summarize function to find the mean height. Let's keep the name of the height column 'avgheight_ft'</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nba</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">season</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">avgheight_ft</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">player_height_ft</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>season</th><th scope=col>avgheight_ft</th></tr></thead>
+<tbody>
+	<tr><td>1996-97 </td><td>6.594319</td></tr>
+	<tr><td>1997-98 </td><td>6.582005</td></tr>
+	<tr><td>1998-99 </td><td>6.591306</td></tr>
+	<tr><td>1999-00 </td><td>6.591895</td></tr>
+	<tr><td>2000-01 </td><td>6.586357</td></tr>
+	<tr><td>2001-02 </td><td>6.595076</td></tr>
+	<tr><td>2002-03 </td><td>6.611565</td></tr>
+	<tr><td>2003-04 </td><td>6.604827</td></tr>
+	<tr><td>2004-05 </td><td>6.602550</td></tr>
+	<tr><td>2005-06 </td><td>6.591885</td></tr>
+	<tr><td>2006-07 </td><td>6.584789</td></tr>
+	<tr><td>2007-08 </td><td>6.589616</td></tr>
+	<tr><td>2008-09 </td><td>6.600936</td></tr>
+	<tr><td>2009-10 </td><td>6.590121</td></tr>
+	<tr><td>2010-11 </td><td>6.601401</td></tr>
+	<tr><td>2011-12 </td><td>6.588738</td></tr>
+	<tr><td>2012-13 </td><td>6.586709</td></tr>
+	<tr><td>2013-14 </td><td>6.586791</td></tr>
+	<tr><td>2014-15 </td><td>6.588996</td></tr>
+	<tr><td>2015-16 </td><td>6.592787</td></tr>
+	<tr><td>2016-17 </td><td>6.591564</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What can you conclude about the average height by season?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#We can conclude that there is no visible trend in height that supports the claim in </span>
+<span class="c1"># the argument that players are bigger now than then. The average height by season stays close </span>
+<span class="c1"># to 6.6 for every season. Therefore we can conclude that the height of players has</span>
+<span class="c1"># been virtually the same since 1996-97 season.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For fun, let us look at the tallest and smallest player in feet to play over the 21 NBA seasons. Let us use the filter option to find the name of the tallest and smallest player once we find their height in feet.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">max</span><span class="p">(</span><span class="n">nba</span><span class="o">$</span><span class="n">player_height_ft</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+7.58333333333333
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nba</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">player_height_ft</span> <span class="o">&gt;</span> <span class="m">7.58</span><span class="p">)</span>  <span class="c1">#used &gt; because error for &#39;==&#39; due to decimal count</span>
+
+<span class="c1">#tallest: Gheorghe Muresan @ 7.58ft</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>X</th><th scope=col>player_name</th><th scope=col>team_abbreviation</th><th scope=col>age</th><th scope=col>player_height</th><th scope=col>player_weight</th><th scope=col>college</th><th scope=col>country</th><th scope=col>draft_year</th><th scope=col>draft_round</th><th scope=col>gp</th><th scope=col>pts</th><th scope=col>reb</th><th scope=col>ast</th><th scope=col>season</th><th scope=col>player_height_ft</th></tr></thead>
+<tbody>
+	<tr><td> 344            </td><td>Gheorghe Muresan</td><td>WAS             </td><td>26              </td><td>231.14          </td><td>137.4384        </td><td>None            </td><td>USA             </td><td>1993            </td><td>2               </td><td>73              </td><td>10.6            </td><td>6.6             </td><td>0.4             </td><td>1996-97         </td><td>7.583333        </td></tr>
+	<tr><td>1108            </td><td>Gheorghe Muresan</td><td>NJN             </td><td>28              </td><td>231.14          </td><td>137.4384        </td><td>None            </td><td>USA             </td><td>1993            </td><td>2               </td><td> 1              </td><td> 0.0            </td><td>0.0             </td><td>0.0             </td><td>1998-99         </td><td>7.583333        </td></tr>
+	<tr><td>1490            </td><td>Gheorghe Muresan</td><td>NJN             </td><td>29              </td><td>231.14          </td><td>137.4384        </td><td>None            </td><td>USA             </td><td>1993            </td><td>2               </td><td>30              </td><td> 3.5            </td><td>2.3             </td><td>0.3             </td><td>1999-00         </td><td>7.583333        </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some may argue that height does not tell the whole story, so you decide to look into weight. On your own, analyze weight.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Look at the player_weight variable. We initially notice that the weight is kept in kilograms, which is difficult to visualize. Use the mutate function to create a new variable/column 'player_weight_lbs', which will be the player's weight in pounds.</p>
+<ul>
+<li>Note: there are .453592kg per pound.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the average player weight in pounds in the nba data set.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-4">Question 4<a class="anchor-link" href="#Question-4"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the average weight in pounds by season. Use the group_by() function to group by season and the summarize function to find the mean weight. Let us keep the name of the weight column 'avgweight_lbs'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What can you conclude about average height by season in reference to the argument?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-5">Question 5<a class="anchor-link" href="#Question-5"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The argument is over. The hypothesis that NBA players are bigger now is not supported after looking at height and weight by season since 1996-97 season. However, you have that one friend that keeps insisting that the argument is valid. To prove him wrong, you decide to create a new variable called BMI to further prove the argument invalid.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Create a new variable/column called 'BMI' using the mutate function.</p>
+<ul>
+<li>Note: BMI = (weight(lbs)/(height(in))^2) X 703.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-6">Question 6<a class="anchor-link" href="#Question-6"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that you have calculated a BMI variable, find the average BMI by season. Use the group_by() function to group by season and the summarize function to find the mean BMI. Make the name of the BMI column 'avg_BMI'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What can you conclude about average BMI by season in reference to the argument?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-2">Problem 2<a class="anchor-link" href="#Problem-2"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The NBA is primarily made up of players from the United States, but the league is open to almost all countries. Many say the presence of foriegn players has grown over the years. For this we will compare the number of foreign players in the league in 1996-97 season to the 2016-17 season.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We will start by analyzing the 1996-97 season.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Instructions">Instructions<a class="anchor-link" href="#Instructions"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Group the number of players by country for the season of 1996-97. Use the filter() to select the 1996-97 season first.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">season9697</span> <span class="o">=</span> <span class="n">nba</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">season</span> <span class="o">==</span> <span class="s">&#39;1996-97&#39;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">season9697</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>X</th><th scope=col>player_name</th><th scope=col>team_abbreviation</th><th scope=col>age</th><th scope=col>player_height</th><th scope=col>player_weight</th><th scope=col>college</th><th scope=col>country</th><th scope=col>draft_year</th><th scope=col>draft_round</th><th scope=col>gp</th><th scope=col>pts</th><th scope=col>reb</th><th scope=col>ast</th><th scope=col>season</th><th scope=col>player_height_ft</th><th scope=col>player_weight_lbs</th><th scope=col>BMI</th></tr></thead>
+<tbody>
+	<tr><td>0                              </td><td>Chris Robinson                 </td><td>VAN                            </td><td>23                             </td><td>195.58                         </td><td> 90.7184                       </td><td>Western Kentucky               </td><td>USA                            </td><td>1996                           </td><td>2                              </td><td>41                             </td><td>4.6                            </td><td>1.7                            </td><td>1.6                            </td><td>1996-97                        </td><td>6.416667                       </td><td>200                            </td><td>23.71395                       </td></tr>
+	<tr><td>1                              </td><td>Matt Fish                      </td><td>MIA                            </td><td>27                             </td><td>210.82                         </td><td>106.5941                       </td><td>North Carolina-Wilmington      </td><td>USA                            </td><td>1992                           </td><td>2                              </td><td> 6                             </td><td>0.3                            </td><td>0.8                            </td><td>0.0                            </td><td>1996-97                        </td><td>6.916667                       </td><td>235                            </td><td>23.98098                       </td></tr>
+	<tr><td>2                              </td><td>Matt Bullard                   </td><td>HOU                            </td><td>30                             </td><td>208.28                         </td><td>106.5941                       </td><td>Iowa                           </td><td>USA                            </td><td>Undrafted                      </td><td>Undrafted                      </td><td>71                             </td><td>4.5                            </td><td>1.6                            </td><td>0.9                            </td><td>1996-97                        </td><td>6.833333                       </td><td>235                            </td><td>24.56945                       </td></tr>
+	<tr><td>3                              </td><td>Marty Conlon                   </td><td>BOS                            </td><td>29                             </td><td>210.82                         </td><td>111.1300                       </td><td>Providence                     </td><td>USA                            </td><td>Undrafted                      </td><td>Undrafted                      </td><td>74                             </td><td>7.8                            </td><td>4.4                            </td><td>1.4                            </td><td>1996-97                        </td><td>6.916667                       </td><td>245                            </td><td>25.00145                       </td></tr>
+	<tr><td>4                              </td><td>Martin Muursepp                </td><td>DAL                            </td><td>22                             </td><td>205.74                         </td><td>106.5941                       </td><td>None                           </td><td>USA                            </td><td>1996                           </td><td>1                              </td><td>42                             </td><td>3.7                            </td><td>1.6                            </td><td>0.5                            </td><td>1996-97                        </td><td>6.750000                       </td><td>235                            </td><td>25.17985                       </td></tr>
+	<tr><td>5                              </td><td>Martin Lewis                   </td><td>TOR                            </td><td>22                             </td><td>198.12                         </td><td>102.0582                       </td><td>Seward County Community College</td><td>USA                            </td><td>1995                           </td><td>2                              </td><td> 9                             </td><td>1.6                            </td><td>0.7                            </td><td>0.4                            </td><td>1996-97                        </td><td>6.500000                       </td><td>225                            </td><td>25.99852                       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have our data from the 1996-97 season selected we can group the number of players by country for the season of 1996-97. Make the name of the number of players column 'numplayers'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">season9697</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">country</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">numplayers</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="n">player_name</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">numplayers</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>country</th><th scope=col>numplayers</th></tr></thead>
+<tbody>
+	<tr><td>USA                  </td><td>432                  </td></tr>
+	<tr><td>Canada               </td><td>  2                  </td></tr>
+	<tr><td>Congo                </td><td>  1                  </td></tr>
+	<tr><td>Croatia              </td><td>  1                  </td></tr>
+	<tr><td>Jamaica              </td><td>  1                  </td></tr>
+	<tr><td>Lithuania            </td><td>  1                  </td></tr>
+	<tr><td>Nigeria              </td><td>  1                  </td></tr>
+	<tr><td>Serbia and Montenegro</td><td>  1                  </td></tr>
+	<tr><td>Ukraine              </td><td>  1                  </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see only 8 other countries had players in the nba combining for 9 total players in the 1996-97 season.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Filter a new data set, 'season1617' here and perform the head() function on it to check your new data set.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that you have data from the 2016-17 season selected, we can group the number of players by country for the season of 2016-17. Make the name of the number of players column 'numplayers'. Use the arrange function to put your data in descending order.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many other countries participate in the NBA in the 2016-17 season? How does this compare to the 1996-97 season?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-4">Question 4<a class="anchor-link" href="#Question-4"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many players are not from the USA in 2016-17 season? How does this compare to the 1996-97 season?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-3">Problem 3<a class="anchor-link" href="#Problem-3"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For problem 3, you are going to further explore the nba data set using the skills you learned above.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the average player pts in the nba data set.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Group by player and find average points. Use that to find the player who has averaged the most points in the NBA data set. Make the column name 'avg_pts'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your coder here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Do the same for rebounds and assists. Group by player name to find average rebound and assist leaders in the nba data set.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#rebounds</span>
+<span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#assists</span>
+<span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-4">Question 4<a class="anchor-link" href="#Question-4"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find out which 3 colleges have sent the most players to the NBA in the whole data set.</p>
+<ul>
+<li>Note: Be careful how you summarize so that each indvidual player's college does not get counted more than once.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-5">Question 5<a class="anchor-link" href="#Question-5"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Basketball is not as intense on the body as a sport like football. Therefore, many players find themselves in the league for multiple years. What is the average amount of seasons that an NBA player will play?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><hr></p>
+<h4 id="For-an-.ipynb-file-of-this-lab-followthis-link.">For an .ipynb file of this lab follow<a href="https://github.com/anthonyiarussi/Introduction-to-Data-Science/tree/master/Student%20Labs/Labs%20.ipynb/Lab3" target="_blank">this link</a>.<a class="anchor-link" href="#For-an-.ipynb-file-of-this-lab-followthis-link."> </a></h4><h4 id="For-a-.Rmd-file-of-this-lab-follow-this-link.">For a .Rmd file of this lab follow <a href="https://github.com/anthonyiarussi/Introduction-to-Data-Science" target="_blank">this link</a>.<a class="anchor-link" href="#For-a-.Rmd-file-of-this-lab-follow-this-link."> </a></h4><p><hr></p>
+<h4 id="Go-to-the-GitHub-repository,-where-you-can-download-a-copy-of-the-lab-for-yourself!">Go to the <a href="https://github.com/anthonyiarussi/Introduction-to-Data-Science" target="_blank">GitHub repository</a>, where you can download a copy of the lab for yourself!<a class="anchor-link" href="#Go-to-the-GitHub-repository,-where-you-can-download-a-copy-of-the-lab-for-yourself!"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

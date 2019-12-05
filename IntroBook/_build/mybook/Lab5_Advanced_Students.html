@@ -1,0 +1,1612 @@
+---
+redirect_from:
+  - "/mybook/lab5-advanced-students"
+interact_link: content/mybook/Lab5_Advanced_Students.ipynb
+kernel_name: ir
+has_widgets: false
+title: |-
+  Advanced Data Visualization and Transformation Lab
+prev_page:
+  url: /mybook/Lab5_Intro.html
+  title: |-
+    Advanced Data Visualization and Transformation
+next_page:
+  url: 
+  title: |-
+    
+suffix: .ipynb
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Medical-Cost-Visualization-and-Transformation">Medical Cost Visualization and Transformation<a class="anchor-link" href="#Medical-Cost-Visualization-and-Transformation"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Loading-the-dplyr-and-ggplot2-packages">Loading the dplyr and ggplot2 packages<a class="anchor-link" href="#Loading-the-dplyr-and-ggplot2-packages"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before you can work with the insurance data set, you will need to load the R package that contains the tools for working with it.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the library() function to load the package. In this case, we have loaded the dplyr and ggplot2 packages for you.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Load the dplyr and ggplot2 packages</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Packages Loaded&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+Attaching package: &#39;dplyr&#39;
+
+The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag
+
+The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union
+
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;Packages Loaded&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">=</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#39;insurance.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Look at the insurance data set</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">insurance</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>age</th><th scope=col>sex</th><th scope=col>bmi</th><th scope=col>children</th><th scope=col>smoker</th><th scope=col>region</th><th scope=col>charges</th></tr></thead>
+<tbody>
+	<tr><td>19       </td><td>female   </td><td>27.900   </td><td>0        </td><td>yes      </td><td>southwest</td><td>16884.924</td></tr>
+	<tr><td>18       </td><td>male     </td><td>33.770   </td><td>1        </td><td>no       </td><td>southeast</td><td> 1725.552</td></tr>
+	<tr><td>28       </td><td>male     </td><td>33.000   </td><td>3        </td><td>no       </td><td>southeast</td><td> 4449.462</td></tr>
+	<tr><td>33       </td><td>male     </td><td>22.705   </td><td>0        </td><td>no       </td><td>northwest</td><td>21984.471</td></tr>
+	<tr><td>32       </td><td>male     </td><td>28.880   </td><td>0        </td><td>no       </td><td>northwest</td><td> 3866.855</td></tr>
+	<tr><td>31       </td><td>female   </td><td>25.740   </td><td>0        </td><td>no       </td><td>southeast</td><td> 3756.622</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Understanding-insurance-data-set">Understanding insurance data set<a class="anchor-link" href="#Understanding-insurance-data-set"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have loaded the insurance data set, you can start examining and understanding it.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many observations (rows) are in the data set?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many variables (columns) are in the data set?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many unique regions are in the insurance data set?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What is the mean insurance cost for all the individuals in the data set?</p>
+<ul>
+<li>Note: The insurance cost is listed under the 'charges' column.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Data-Preproccesing">Data Preproccesing<a class="anchor-link" href="#Data-Preproccesing"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It will benefit us to group the insurance cost data into a new variable that is grouped into 'High', 'Medium', and 'Low' in reference to cost.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, let us get a basic summary of the charges variable in order to better understand it.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">insurance</span><span class="o">$</span><span class="n">charges</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1122    4740    9382   13270   16640   63770 </pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After looking at the charges variable it makes sense to divide the groups as all rows with charges less than 5000 will be categorized as 'Low'. All rows with charges greater than 5000 and less than 15000 will be categorized as 'Medium', and all rows with charges greater than 15000 will be categorized as 'High'.</p>
+<p>Below I used the mutate function and an if else statement to achieve this.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">=</span> <span class="n">insurance</span> <span class="o">%&gt;%</span> 
+    <span class="nf">mutate</span><span class="p">(</span><span class="n">charges_blocked</span> <span class="o">=</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">charges</span> <span class="o">&lt;</span> <span class="m">5000</span><span class="p">,</span> <span class="s">&#39;Low&#39;</span><span class="p">,</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">charges</span> <span class="o">&lt;</span> <span class="m">15000</span><span class="p">,</span> <span class="s">&#39;Medium&#39;</span><span class="p">,</span> <span class="s">&#39;High&#39;</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see, the 'charges_blocked' variable has been added, blocked according to the charges.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">head</span><span class="p">(</span><span class="n">insurance</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>age</th><th scope=col>sex</th><th scope=col>bmi</th><th scope=col>children</th><th scope=col>smoker</th><th scope=col>region</th><th scope=col>charges</th><th scope=col>charges_blocked</th></tr></thead>
+<tbody>
+	<tr><td>19       </td><td>female   </td><td>27.900   </td><td>0        </td><td>yes      </td><td>southwest</td><td>16884.924</td><td>High     </td></tr>
+	<tr><td>18       </td><td>male     </td><td>33.770   </td><td>1        </td><td>no       </td><td>southeast</td><td> 1725.552</td><td>Low      </td></tr>
+	<tr><td>28       </td><td>male     </td><td>33.000   </td><td>3        </td><td>no       </td><td>southeast</td><td> 4449.462</td><td>Low      </td></tr>
+	<tr><td>33       </td><td>male     </td><td>22.705   </td><td>0        </td><td>no       </td><td>northwest</td><td>21984.471</td><td>High     </td></tr>
+	<tr><td>32       </td><td>male     </td><td>28.880   </td><td>0        </td><td>no       </td><td>northwest</td><td> 3866.855</td><td>Low      </td></tr>
+	<tr><td>31       </td><td>female   </td><td>25.740   </td><td>0        </td><td>no       </td><td>southeast</td><td> 3756.622</td><td>Low      </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">insurance</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>      age            sex           bmi           children     smoker    
+ Min.   :18.00   female:662   Min.   :15.96   Min.   :0.000   no :1064  
+ 1st Qu.:27.00   male  :676   1st Qu.:26.30   1st Qu.:0.000   yes: 274  
+ Median :39.00                Median :30.40   Median :1.000             
+ Mean   :39.21                Mean   :30.66   Mean   :1.095             
+ 3rd Qu.:51.00                3rd Qu.:34.69   3rd Qu.:2.000             
+ Max.   :64.00                Max.   :53.13   Max.   :5.000             
+       region       charges      charges_blocked   
+ northeast:324   Min.   : 1122   Length:1338       
+ northwest:325   1st Qu.: 4740   Class :character  
+ southeast:364   Median : 9382   Mode  :character  
+ southwest:325   Mean   :13270                     
+                 3rd Qu.:16640                     
+                 Max.   :63770                     </pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let us start by doing some basic data exploration using methods we learned in labs 3 and 4.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Instructions">Instructions<a class="anchor-link" href="#Instructions"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It would be interesting to find out whether there is a mean difference in insurance cost based on gender. As we have learned in previous labs, there are multiple ways to approach this question.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, let us see if we can find the mean charges by gender using the group_by() and summarize() funciton. It is beneficial to get the most information out of our functions. More than one function can be added to the summarize() function. In this case I added the n() function which provides a count of all individuals in the grouping. This allows us to know how many males and females are in each group.</p>
+<p>Let us make the name of the charges column 'mean_charges' and the count column 'count'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">mean_charges</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">charges</span><span class="p">),</span> <span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>sex</th><th scope=col>mean_charges</th><th scope=col>count</th></tr></thead>
+<tbody>
+	<tr><td>female  </td><td>12569.58</td><td>662     </td></tr>
+	<tr><td>male    </td><td>13956.75</td><td>676     </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see, the mean charges are very similar for males and females. Also, each group is very similar in size. There are 662 females and 676 males in the data set.</p>
+<p>The above method is not the only way to figure out if there is a difference in insurance cost based on gender.</p>
+<p>Let us use a ggplot2 visualization to answer the same question. A geom_boxplot() function would work great for comparing the mean insurance cost of males and females side by side.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">insurance</span><span class="p">,</span> <span class="n">mapping</span> <span class="o">=</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">sex</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">charges</span><span class="p">))</span> <span class="o">+</span>
+<span class="nf">geom_boxplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/mybook/Lab5_Advanced_Students_33_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From this boxplot we can see that the mean charges for males and females are very close, accomplishing the same result as the first method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The results for mean insurance cost by gender were expected. On your own you will explore the smoker variable. It is reasonable to assume that someone who smokes will have a higher mean insurance cost than someone who does not. Use the methods we used above to test the hypothesis that smokers have a higher mean insurance cost than non smokers.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the mean charges by smoker using the group_by() and summarize() funciton. Use the n() function to display a count of smokers and non smokers. Make the name of the charges column 'mean_charges' and the name of the count column 'count'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the geom_boxplot() function to find the mean charges by smoker type.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How many smokers are there in the insurance data set? How many non smokers? Now that you have used two methods to analyze the hypothesis that smokers have a higher mean insurance cost than non smokers. What can you conclude about that statement? Do smokers have a higher mean insurance cost? If so, by how much?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-2">Problem 2<a class="anchor-link" href="#Problem-2"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we learned from Problem 1, smoking clearly impacts the cost of your health insurance. Whether or not you are a smoker is an important piece of information to insurance companies when assessing your overall health. Smoking clearly has links to overall health, therefore it would be reasonable to assume individuals who smoke have a higher mean BMI. Use the methods from Problem 1 to test the hypothesis that individuals who smoke have a higher mean BMI than individuals who do not smoke.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the mean BMI by smoker using the group_by() and summarize() funciton. Make the name of the charges column 'mean_BMI'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the geom_boxplot() function to find the mean BMI by smoker type.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that you have used two methods to analyze the hypothesis that smokers have a higher mean BMI than non smokers. What can you conclude about that statement? Do smokers have a higher mean insurance cost?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-3">Problem 3<a class="anchor-link" href="#Problem-3"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In Problem 3 we are going to perform further exploration on the data set using advanced group_by() and visualizations. In problem one we looked at the mean insurance cost by gender. It would be interesting to see if there is a compelling difference in the groupings as well. In order to do this we need to explore the number of each type of group ('Low', 'Medium', 'High) within each gender group. Initially you may think to use the filter() function to create a new data set with just males and then use a groupby() and summarize function to count the number of charge types ('Low', 'Medium', 'High) for males, and repeat the same for females. But, now that you are on yor way to becoming a data scientist, efficiency is key. There is a simple way to explore the groups within a group using the groupby() function.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Instructions">Instructions<a class="anchor-link" href="#Instructions"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below I counted up the number of individuals in each group of charges_blocked ('Low', 'Medium', 'High) within each gender group ('male','female').</p>
+<ul>
+<li>Note: Notice how 'charges_blocked' is included in the groupby() function seperated by a comma.</li>
+<li>Note: The function 'n()' is used as a simple count function, placed in the summarize function. We simply named it 'count'.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">,</span> <span class="n">charges_blocked</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>sex</th><th scope=col>charges_blocked</th><th scope=col>count</th></tr></thead>
+<tbody>
+	<tr><td>female</td><td>High  </td><td>159   </td></tr>
+	<tr><td>female</td><td>Low   </td><td>173   </td></tr>
+	<tr><td>female</td><td>Medium</td><td>330   </td></tr>
+	<tr><td>male  </td><td>High  </td><td>199   </td></tr>
+	<tr><td>male  </td><td>Low   </td><td>186   </td></tr>
+	<tr><td>male  </td><td>Medium</td><td>291   </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The information above is good, but in data science you are always asking the question: "How can I make it better?". Let us use the mutate() function to add a column that calculates the percentage of each charges group inside the respective gender group.</p>
+<ul>
+<li>Note: An example of how the following is calculated, there are 662 females in the data set as we have learned in Problem 1. There are 330 females with 'Medium' charges blocked, therefore, the percentage is calculated by 330/662 = .4984894.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">,</span> <span class="n">charges_blocked</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">percentage</span> <span class="o">=</span> <span class="n">count</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>sex</th><th scope=col>charges_blocked</th><th scope=col>count</th><th scope=col>percentage</th></tr></thead>
+<tbody>
+	<tr><td>female   </td><td>High     </td><td>159      </td><td>0.2401813</td></tr>
+	<tr><td>female   </td><td>Low      </td><td>173      </td><td>0.2613293</td></tr>
+	<tr><td>female   </td><td>Medium   </td><td>330      </td><td>0.4984894</td></tr>
+	<tr><td>male     </td><td>High     </td><td>199      </td><td>0.2943787</td></tr>
+	<tr><td>male     </td><td>Low      </td><td>186      </td><td>0.2751479</td></tr>
+	<tr><td>male     </td><td>Medium   </td><td>291      </td><td>0.4304734</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above charts produced provide all the information needed to answer our question whether or not there is a compelling difference in the charges blocked by gender. But it is difficult to visualize.</p>
+<p>Well that is no problem for us! Let us use the ggplot2 functions to visualize this problem. This problem deals with counts, therefore it would be appropriate to use a geom_bar() function. The geom_bar() function has a 'fill' option which allows you to group data within each bar using different colors. The 'fill' option is thus very useful in visualizing whether or not there is a compelling difference in the charges blocked by gender.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">insurance</span><span class="p">)</span> <span class="o">+</span> 
+  <span class="nf">geom_bar</span><span class="p">(</span><span class="n">mapping</span> <span class="o">=</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">sex</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">charges_blocked</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/mybook/Lab5_Advanced_Students_64_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This visualization allows us to easily compare the distributions of the blocked charges ('Low', 'Medium', 'High) by gender.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we learned in Problem 1, being a smoker has a great impact on an individuals insurance cost. Use what you learned above to further explore the insurance charges blocked ('Low', 'Medium', 'High) by smoker and non smoker.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On your own use the groupby() and summarize() function to answer whether or not there is a compelling difference in the charges blocked by smoker. Make the name of the counted column 'count'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the groupby() and summarize() function to answer whether or not there is a compelling difference in the charges blocked by smoker. But, this time add percentages to the respective groups using the mutate function.</p>
+<p>Make the name of the counted column 'count' and the name of the percentage column 'percentage'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the geom_bar() function to vizualize whether or not there is a compelling difference in the charges blocked by smoker.</p>
+<ul>
+<li>Note: The fill function will be necessary for this.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-4">Question 4<a class="anchor-link" href="#Question-4"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What can you conclude about smoking and insurance cost after exploring the insurance charges blocked ('Low', 'Medium', 'High) by smoker and non smoker? What percentage of smokers are in the 'Medium' group? Are there any smokers in the 'Low' group?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-4">Problem 4<a class="anchor-link" href="#Problem-4"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Another variable that may have a strong influence on insurance cost is the number of dependents/children an individual has. It is a reasonable hypothesis that the more children an individual has the higher the bills. On your own you are going to explore this hypothesis using the skills you practiced in earlier problems.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Find the mean charges by number of children using the group_by() and summarize() funciton. Use the count n() function to count the number of individuals in each group. Add percentages to the respective groups using the mutate function. Make the name of the charges column 'mean_charges', the name of the count column 'count', and the name of the percentages column 'percentage'.</p>
+<ul>
+<li>Note: You will notice that there is a small number of individuals in the groups for 4 and 5 children. Due to the small sample size provided for these two groups (4 &amp; 5), it would be best to not make any assumptions about these groups when writing your conclusion. As you should notice, groups 4 and 5 combine, barely make up 3% of the data set.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the geom_bar() function to vizualize whether or not there is a compelling difference in the charges blocked by number of children.</p>
+<ul>
+<li>Note: The fill function will be necessary for this.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What can you conclude about the hypothesis that the more children an individual has the higher the bills? Do your findings agree or disagree? Individuals with which number of children have the highest mean insurance cost?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-5">Problem 5<a class="anchor-link" href="#Problem-5"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The last variable we will be looking at is age. But, due to age not being grouped, we cannot look at the average charges per age since there is a large quantity of unique ages. But, we can look at the average age for each charge blocked. We can hypothesize that the 'High' charge blocked group will have a higher mean age than 'Medium', and 'Medium' a higher mean age than 'Low'. On your own you are going to test this hypothesis.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the groupby() and summarize() function to find the average age for each blocked charge. Make the name of the average age column 'avg_age'.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-2">Question 2<a class="anchor-link" href="#Question-2"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, let us visualize the data. Use the geom_boxplot() function to find the mean age by each charge blocked.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Question-3">Question 3<a class="anchor-link" href="#Question-3"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Which charge blocked group had the highest average age? Does this confirm or deny the hypothesis? Did our hypothesis correctly predict the 'Low' groups average age placement?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#your conclusion here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><hr></p>
+<h4 id="For-an-.ipynb-file-of-this-lab-follow-this-link.">For an .ipynb file of this lab follow <a href="https://github.com/anthonyiarussi/Introduction-to-Data-Science/tree/master/Student%20Labs/Labs%20.ipynb/Lab5" target="_blank">this link</a>.<a class="anchor-link" href="#For-an-.ipynb-file-of-this-lab-follow-this-link."> </a></h4><h4 id="For-a-.Rmd-file-of-this-lab-follow-this-link.">For a .Rmd file of this lab follow <a href="https://github.com/anthonyiarussi/Introduction-to-Data-Science" target="_blank">this link</a>.<a class="anchor-link" href="#For-a-.Rmd-file-of-this-lab-follow-this-link."> </a></h4><p><hr></p>
+<h4 id="Go-to-the-GitHub-repository,-where-you-can-download-a-copy-of-the-lab-for-yourself!">Go to the <a href="https://github.com/anthonyiarussi/Introduction-to-Data-Science" target="_blank">GitHub repository</a>, where you can download a copy of the lab for yourself!<a class="anchor-link" href="#Go-to-the-GitHub-repository,-where-you-can-download-a-copy-of-the-lab-for-yourself!"> </a></h4>
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
