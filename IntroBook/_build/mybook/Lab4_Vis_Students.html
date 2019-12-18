@@ -34,6 +34,16 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Loading-the-dplyr-package">Loading the dplyr package<a class="anchor-link" href="#Loading-the-dplyr-package"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Before you can work with the NBA data set, you will need to load the R packages that contains the tools for working with it.</p>
 <p>Use the library() function to load the package. In this case we’ve loaded the dplyr and ggplot2 packages for you.</p>
 
@@ -61,6 +71,25 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_wrapper">
 <div class="output">
 
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+Attaching package: &#39;dplyr&#39;
+
+The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag
+
+The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union
+
+</pre>
+</div>
+</div>
+</div>
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
@@ -332,7 +361,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In the NBA, height is considered very important, in the last lab we discovered that the average height in the NBA over the 21 seasons was nearly 6.6 feet. Height matters most for players whose primary role is to rebound the ball. Let's use a basic ggplot scatter plot to see if there is a relationship between height and number of rebounds. But first, we need to create a new column with height converted to feet.</p>
+<p>In the NBA, height is considered very important, in the last lab we discovered that the average height in the NBA over the 21 seasons was nearly 6.6 feet. Height matters most for players whose primary role is to rebound the ball. Let us use a basic ggplot scatter plot to see if there is a relationship between height and number of rebounds. But first, we need to create a new column with height converted to feet.</p>
 
 </div>
 </div>
@@ -372,7 +401,10 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can also set the aesthetic properties of your geom manually, as I did below, making all of the points in our plot blue. More options include different symbols and sizes, including colors. You can also use symbols, size, and color to represent another variable/column of data in your plot in order to convey more information. This lab contains examples of that using color. For more detail on aesthetic mapping, follow the <a href="https://r4ds.had.co.nz/data-visualisation.html#aesthetic-mappings" target="_blank">link</a>.</p>
+<p>You can also set the aesthetic properties of your geom manually, as I did below, making all of the points in our plot blue. More options include different symbols and sizes, including colors. You can also use symbols, size, and color to represent another variable/column of data in your plot in order to convey more information. This lab contains examples of that using color. For more examples on color, size and symbols follow the link below.</p>
+<ul>
+<li>For more detail on aesthetic mapping go to <a href="https://r4ds.had.co.nz/data-visualisation.html#aesthetic-mappings">https://r4ds.had.co.nz/data-visualisation.html#aesthetic-mappings</a></li>
+</ul>
 
 </div>
 </div>
@@ -421,7 +453,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_25_1.png"
+<img src="../images/mybook/Lab4_Vis_Students_26_1.png"
 >
 </div>
 
@@ -437,7 +469,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we can see from the scatter plot, as height increases in ft, the number of rebounds increases. This confirms our hypothesis that taller players get more rebounds.</p>
+<p>As we can see from the scatter plot, as height increases in ft, the number of rebounds increases.</p>
 
 </div>
 </div>
@@ -506,7 +538,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_29_2.png"
+<img src="../images/mybook/Lab4_Vis_Students_30_2.png"
 >
 </div>
 
@@ -593,7 +625,7 @@ Traceback:
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_33_2.png"
+<img src="../images/mybook/Lab4_Vis_Students_34_2.png"
 >
 </div>
 
@@ -609,7 +641,8 @@ Traceback:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
+<p>Above we concluded that height has a positive linear correlation to number of rebounds, but, can the same be said for points and assists? On your own, create a scatter plot comparing height in ft to points and height in feet to assists, and give a brief conclusion on the relationships.</p>
+
 </div>
 </div>
 </div>
@@ -619,8 +652,7 @@ Traceback:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Above we concluded that height has a positive linear correlation to number of rebounds, but, can the same be said for points and assists? On your own, create a scatter plot comparing height in ft to points and height in feet to assists, and give a brief conclusion on the relationships.</p>
-
+<h4 id="Question-1">Question 1<a class="anchor-link" href="#Question-1"> </a></h4>
 </div>
 </div>
 </div>
@@ -791,7 +823,7 @@ Traceback:
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_46_1.png"
+<img src="../images/mybook/Lab4_Vis_Students_47_1.png"
 >
 </div>
 
@@ -828,7 +860,7 @@ Traceback:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Two of the most important characteristics a team looks for in a player they are about to draft is the ability to score points and make assists. The players that do this the most effectively most likely were drafted in the first, maybe the second round, or, in some cases, undrafted. Produce a scatter plot comparing points and assists, with the color aesthetic set to draft round for the season13_14 data set. Then make a statement based on our hypothesis that players who are drafted in the 1st round have the highest points/assists.</p>
+<p>Two of the most important characteristics a team looks for in a player they are about to draft is the ability to score points and make assists. The players that do this the most effectively most likely were drafted in the first, maybe the second round, or, in some cases, undrafted. Produce a scatter plot comparing points and assists, with the color aesthetic set to draft round for the season13_14 data set. Do players who are drafted in the 1st round have the highest points/assists?</p>
 
 </div>
 </div>
@@ -1038,7 +1070,7 @@ Traceback:
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_60_1.png"
+<img src="../images/mybook/Lab4_Vis_Students_61_1.png"
 >
 </div>
 
@@ -1094,7 +1126,7 @@ Traceback:
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_62_1.png"
+<img src="../images/mybook/Lab4_Vis_Students_63_1.png"
 >
 </div>
 
@@ -1425,7 +1457,7 @@ Traceback:
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_78_1.png"
+<img src="../images/mybook/Lab4_Vis_Students_79_1.png"
 >
 </div>
 
@@ -1481,7 +1513,7 @@ Traceback:
 
 
 <div class="output_png output_subarea ">
-<img src="../images/mybook/Lab4_Vis_Students_80_1.png"
+<img src="../images/mybook/Lab4_Vis_Students_81_1.png"
 >
 </div>
 
@@ -1655,7 +1687,7 @@ Traceback:
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#your code here</span>
 
-<span class="c1">#explanation</span>
+<span class="c1">#Explanation</span>
 </pre></div>
 
     </div>

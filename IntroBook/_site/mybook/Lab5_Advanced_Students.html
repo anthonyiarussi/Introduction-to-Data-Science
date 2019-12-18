@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "http://anita-doctor.codio.io/jupyter-book/mybook/Lab5_Advanced_Students.html",
   "headline": "Advanced Data Visualization and Transformation Lab",
-  "datePublished": "2019-12-05T04:14:43+00:00",
-  "dateModified": "2019-12-05T04:14:43+00:00",
+  "datePublished": "2019-12-15T20:21:43+00:00",
+  "dateModified": "2019-12-15T20:21:43+00:00",
   "description": "        Medical Cost Visualization and Transformation Loading the dplyr and ggplot2 packages Before you can work with the insurance data set, you will need t...",
   "author": {
     "@type": "Person",
@@ -993,25 +993,6 @@ initFunction(initPrint)
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>
-Attaching package: &#39;dplyr&#39;
-
-The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag
-
-The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union
-
-</pre>
-</div>
-</div>
-</div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>[1] &#34;Packages Loaded&#34;
 </pre>
@@ -1236,7 +1217,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It will benefit us to group the insurance cost data into a new variable that is grouped into 'High', 'Medium', and 'Low' in reference to cost.</p>
+<p>It will benefit us to group the insurance cost data into a new variable that is grouped into 'High', 'Medium', and 'Low', in reference to cost.</p>
 
 </div>
 </div>
@@ -1294,7 +1275,7 @@ The following objects are masked from &#39;package:base&#39;:
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>After looking at the charges variable it makes sense to divide the groups as all rows with charges less than 5000 will be categorized as 'Low'. All rows with charges greater than 5000 and less than 15000 will be categorized as 'Medium', and all rows with charges greater than 15000 will be categorized as 'High'.</p>
-<p>Below I used the mutate function and an if else statement to achieve this.</p>
+<p>Below, I used the mutate function and an if else statement to achieve this.</p>
 
 </div>
 </div>
@@ -1309,7 +1290,7 @@ The following objects are masked from &#39;package:base&#39;:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">=</span> <span class="n">insurance</span> <span class="o">%&gt;%</span> 
-    <span class="nf">mutate</span><span class="p">(</span><span class="n">charges_blocked</span> <span class="o">=</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">charges</span> <span class="o">&lt;</span> <span class="m">5000</span><span class="p">,</span> <span class="s">&#39;Low&#39;</span><span class="p">,</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">charges</span> <span class="o">&lt;</span> <span class="m">15000</span><span class="p">,</span> <span class="s">&#39;Medium&#39;</span><span class="p">,</span> <span class="s">&#39;High&#39;</span><span class="p">)))</span>
+    <span class="nf">mutate</span><span class="p">(</span><span class="n">charges_grouped</span> <span class="o">=</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">charges</span> <span class="o">&lt;</span> <span class="m">5000</span><span class="p">,</span> <span class="s">&#39;Low&#39;</span><span class="p">,</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">charges</span> <span class="o">&lt;</span> <span class="m">15000</span><span class="p">,</span> <span class="s">&#39;Medium&#39;</span><span class="p">,</span> <span class="s">&#39;High&#39;</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -1323,7 +1304,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As you can see, the 'charges_blocked' variable has been added, blocked according to the charges.</p>
+<p>As you can see, the 'charges_grouped' variable has been added, grouped according to the charges.</p>
 
 </div>
 </div>
@@ -1353,7 +1334,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="output_html rendered_html output_subarea ">
 <table>
-<thead><tr><th scope=col>age</th><th scope=col>sex</th><th scope=col>bmi</th><th scope=col>children</th><th scope=col>smoker</th><th scope=col>region</th><th scope=col>charges</th><th scope=col>charges_blocked</th></tr></thead>
+<thead><tr><th scope=col>age</th><th scope=col>sex</th><th scope=col>bmi</th><th scope=col>children</th><th scope=col>smoker</th><th scope=col>region</th><th scope=col>charges</th><th scope=col>charges_grouped</th></tr></thead>
 <tbody>
 	<tr><td>19       </td><td>female   </td><td>27.900   </td><td>0        </td><td>yes      </td><td>southwest</td><td>16884.924</td><td>High     </td></tr>
 	<tr><td>18       </td><td>male     </td><td>33.770   </td><td>1        </td><td>no       </td><td>southeast</td><td> 1725.552</td><td>Low      </td></tr>
@@ -1404,7 +1385,7 @@ The following objects are masked from &#39;package:base&#39;:
  Mean   :39.21                Mean   :30.66   Mean   :1.095             
  3rd Qu.:51.00                3rd Qu.:34.69   3rd Qu.:2.000             
  Max.   :64.00                Max.   :53.13   Max.   :5.000             
-       region       charges      charges_blocked   
+       region       charges      charges_grouped   
  northeast:324   Min.   : 1122   Length:1338       
  northwest:325   1st Qu.: 4740   Class :character  
  southeast:364   Median : 9382   Mode  :character  
@@ -1467,7 +1448,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, let us see if we can find the mean charges by gender using the group_by() and summarize() funciton. It is beneficial to get the most information out of our functions. More than one function can be added to the summarize() function. In this case I added the n() function which provides a count of all individuals in the grouping. This allows us to know how many males and females are in each group.</p>
+<p>First, let us find the mean charges by gender using the group_by() and summarize() funciton. It is beneficial to get the most information out of our functions. More than one function can be added to the summarize() function. In this case I added the n() function which provides a count of all individuals in the grouping and the mean() function to calculate the mean charges in each group.</p>
 <p>Let us make the name of the charges column 'mean_charges' and the count column 'count'.</p>
 
 </div>
@@ -1597,7 +1578,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The results for mean insurance cost by gender were expected. On your own you will explore the smoker variable. It is reasonable to assume that someone who smokes will have a higher mean insurance cost than someone who does not. Use the methods we used above to test the hypothesis that smokers have a higher mean insurance cost than non smokers.</p>
+<p>On your own you will explore the smoker variable. Do you think that someone who smokes will have a higher mean insurance cost than someone who does not? Write R code to answer this question.</p>
 
 </div>
 </div>
@@ -1608,7 +1589,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Find the mean charges by smoker using the group_by() and summarize() funciton. Use the n() function to display a count of smokers and non smokers. Make the name of the charges column 'mean_charges' and the name of the count column 'count'.</p>
+<p>Find the mean charges by smoker using the group_by() and summarize() funciton. Use the n() function to display a count of smokers and non smokers.</p>
 
 </div>
 </div>
@@ -1684,7 +1665,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>How many smokers are there in the insurance data set? How many non smokers? Now that you have used two methods to analyze the hypothesis that smokers have a higher mean insurance cost than non smokers. What can you conclude about that statement? Do smokers have a higher mean insurance cost? If so, by how much?</p>
+<p>Now that you have used the two methods to analyze the data, what conclusion can you make about smokers vs non smokers?</p>
 
 </div>
 </div>
@@ -1722,7 +1703,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we learned from Problem 1, smoking clearly impacts the cost of your health insurance. Whether or not you are a smoker is an important piece of information to insurance companies when assessing your overall health. Smoking clearly has links to overall health, therefore it would be reasonable to assume individuals who smoke have a higher mean BMI. Use the methods from Problem 1 to test the hypothesis that individuals who smoke have a higher mean BMI than individuals who do not smoke.</p>
+<p>As we learned from Problem 1, smoking impacts the cost of your health insurance. Whether or not you are a smoker is an important piece of information to insurance companies when assessing your overall health. Do you think that someone who smokes will have a higher mean BMI than someone who does not? Use the methods from Problem 1 to answer this question.</p>
 
 </div>
 </div>
@@ -1743,7 +1724,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Find the mean BMI by smoker using the group_by() and summarize() funciton. Make the name of the charges column 'mean_BMI'.</p>
+<p>Find the mean BMI by smoker using the group_by() and summarize() funciton.</p>
 
 </div>
 </div>
@@ -1819,7 +1800,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that you have used two methods to analyze the hypothesis that smokers have a higher mean BMI than non smokers. What can you conclude about that statement? Do smokers have a higher mean insurance cost?</p>
+<p>Now that you have used the two methods to analyze the data, what conclusion can you make about the BMI of smokers vs non smokers?</p>
 
 </div>
 </div>
@@ -1857,7 +1838,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In Problem 3 we are going to perform further exploration on the data set using advanced group_by() and visualizations. In problem one we looked at the mean insurance cost by gender. It would be interesting to see if there is a compelling difference in the groupings as well. In order to do this we need to explore the number of each type of group ('Low', 'Medium', 'High) within each gender group. Initially you may think to use the filter() function to create a new data set with just males and then use a groupby() and summarize function to count the number of charge types ('Low', 'Medium', 'High) for males, and repeat the same for females. But, now that you are on yor way to becoming a data scientist, efficiency is key. There is a simple way to explore the groups within a group using the groupby() function.</p>
+<p>In Problem 3, we are going to perform further exploration on the data set using advanced group_by() and visualization techniques. In Problem 1, we looked at the mean insurance cost by gender. Now, let us use different techniques to count the number of individuals per gender group that has ‘Low’, ‘Medium’, and ‘High’ charges. Initially, you may think to use the filter() function to create a new data set with just males and then use a groupby() and summarize function to count the number of charge types ('Low', 'Medium', 'High) for males, and repeat the same for females. But, now that you are on yor way to becoming a data scientist, efficiency is key. There is a simple way to explore the groups within a group using the groupby() function.</p>
 
 </div>
 </div>
@@ -1878,9 +1859,9 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Below I counted up the number of individuals in each group of charges_blocked ('Low', 'Medium', 'High) within each gender group ('male','female').</p>
+<p>Below I counted up the number of individuals in each group of charges_grouped ('Low', 'Medium', 'High) within each gender group ('male','female').</p>
 <ul>
-<li>Note: Notice how 'charges_blocked' is included in the groupby() function seperated by a comma.</li>
+<li>Note: Notice how 'charges_grouped' is included in the groupby() function seperated by a comma.</li>
 <li>Note: The function 'n()' is used as a simple count function, placed in the summarize function. We simply named it 'count'.</li>
 </ul>
 
@@ -1896,7 +1877,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">,</span> <span class="n">charges_blocked</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">,</span> <span class="n">charges_grouped</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -1912,7 +1893,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="output_html rendered_html output_subarea ">
 <table>
-<thead><tr><th scope=col>sex</th><th scope=col>charges_blocked</th><th scope=col>count</th></tr></thead>
+<thead><tr><th scope=col>sex</th><th scope=col>charges_grouped</th><th scope=col>count</th></tr></thead>
 <tbody>
 	<tr><td>female</td><td>High  </td><td>159   </td></tr>
 	<tr><td>female</td><td>Low   </td><td>173   </td></tr>
@@ -1937,9 +1918,9 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The information above is good, but in data science you are always asking the question: "How can I make it better?". Let us use the mutate() function to add a column that calculates the percentage of each charges group inside the respective gender group.</p>
+<p>The information above is good, but in data science you are always asking the question: "How can I make it better?". Let us use the mutate() function to add a column that calculates the percentage of each charge group inside the respective gender group.</p>
 <ul>
-<li>Note: An example of how the following is calculated, there are 662 females in the data set as we have learned in Problem 1. There are 330 females with 'Medium' charges blocked, therefore, the percentage is calculated by 330/662 = .4984894.</li>
+<li>Note: An example of how the following is calculated, there are 662 females in the data set as we have learned in Problem 1. There are 330 females with 'Medium' charges grouped, therefore, the percentage is calculated by 330/662 = .4984894.</li>
 </ul>
 
 </div>
@@ -1954,7 +1935,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">,</span> <span class="n">charges_blocked</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">percentage</span> <span class="o">=</span> <span class="n">count</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">insurance</span> <span class="o">%&gt;%</span> <span class="nf">group_by</span><span class="p">(</span><span class="n">sex</span><span class="p">,</span> <span class="n">charges_grouped</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="nf">n</span><span class="p">())</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">percentage</span> <span class="o">=</span> <span class="n">count</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -1970,7 +1951,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="output_html rendered_html output_subarea ">
 <table>
-<thead><tr><th scope=col>sex</th><th scope=col>charges_blocked</th><th scope=col>count</th><th scope=col>percentage</th></tr></thead>
+<thead><tr><th scope=col>sex</th><th scope=col>charges_grouped</th><th scope=col>count</th><th scope=col>percentage</th></tr></thead>
 <tbody>
 	<tr><td>female   </td><td>High     </td><td>159      </td><td>0.2401813</td></tr>
 	<tr><td>female   </td><td>Low      </td><td>173      </td><td>0.2613293</td></tr>
@@ -1995,8 +1976,8 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The above charts produced provide all the information needed to answer our question whether or not there is a compelling difference in the charges blocked by gender. But it is difficult to visualize.</p>
-<p>Well that is no problem for us! Let us use the ggplot2 functions to visualize this problem. This problem deals with counts, therefore it would be appropriate to use a geom_bar() function. The geom_bar() function has a 'fill' option which allows you to group data within each bar using different colors. The 'fill' option is thus very useful in visualizing whether or not there is a compelling difference in the charges blocked by gender.</p>
+<p>The above table provides all the information in a single view.</p>
+<p>Let us use the ggplot2 functions to explore the data. This problem deals with counts, therefore it would be appropriate to use a geom_bar() function. The geom_bar() function has a 'fill' option which allows you to group data within each bar using different colors. The 'fill' option is thus very useful in visualizing data grouped by gender.</p>
 
 </div>
 </div>
@@ -2011,7 +1992,7 @@ The following objects are masked from &#39;package:base&#39;:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">insurance</span><span class="p">)</span> <span class="o">+</span> 
-  <span class="nf">geom_bar</span><span class="p">(</span><span class="n">mapping</span> <span class="o">=</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">sex</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">charges_blocked</span><span class="p">))</span>
+  <span class="nf">geom_bar</span><span class="p">(</span><span class="n">mapping</span> <span class="o">=</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">sex</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">charges_grouped</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -2051,7 +2032,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This visualization allows us to easily compare the distributions of the blocked charges ('Low', 'Medium', 'High) by gender.</p>
+<p>This visualization above allows us to easily compare the distributions of the charges grouped ('Low', 'Medium', 'High) by gender.</p>
 
 </div>
 </div>
@@ -2072,18 +2053,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we learned in Problem 1, being a smoker has a great impact on an individuals insurance cost. Use what you learned above to further explore the insurance charges blocked ('Low', 'Medium', 'High) by smoker and non smoker.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>On your own use the groupby() and summarize() function to answer whether or not there is a compelling difference in the charges blocked by smoker. Make the name of the counted column 'count'.</p>
+<p>On your own use the groupby() and summarize() function to count the number of individuals per smoker group that has ‘Low’, ‘Medium’, and ‘High’ charges.</p>
 
 </div>
 </div>
@@ -2121,8 +2091,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Use the groupby() and summarize() function to answer whether or not there is a compelling difference in the charges blocked by smoker. But, this time add percentages to the respective groups using the mutate function.</p>
-<p>Make the name of the counted column 'count' and the name of the percentage column 'percentage'.</p>
+<p>Use the groupby() and summarize() function to count the number of individuals per smoker group that has ‘Low’, ‘Medium’, and ‘High’ charges. But, this time add percentages to the respective groups using the mutate() function.</p>
 
 </div>
 </div>
@@ -2160,7 +2129,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Use the geom_bar() function to vizualize whether or not there is a compelling difference in the charges blocked by smoker.</p>
+<p>Use the geom_bar() function to vizualize whether or not there is a compelling difference in the charges ('Low', 'Medium', 'High) grouped by smoker.</p>
 <ul>
 <li>Note: The fill function will be necessary for this.</li>
 </ul>
@@ -2201,7 +2170,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>What can you conclude about smoking and insurance cost after exploring the insurance charges blocked ('Low', 'Medium', 'High) by smoker and non smoker? What percentage of smokers are in the 'Medium' group? Are there any smokers in the 'Low' group?</p>
+<p>What conclusion can you make about the number of individuals per smoker group that has ‘Low’, ‘Medium’, and ‘High’ charges?</p>
 
 </div>
 </div>
@@ -2239,7 +2208,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Another variable that may have a strong influence on insurance cost is the number of dependents/children an individual has. It is a reasonable hypothesis that the more children an individual has the higher the bills. On your own you are going to explore this hypothesis using the skills you practiced in earlier problems.</p>
+<p>Another variable that may have a influence on insurance cost is the number of dependents/children an individual has. Do you think that that individuals with more children will have higher the insurance costs? Using the skills you practiced before answer this question.</p>
 
 </div>
 </div>
@@ -2260,9 +2229,9 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Find the mean charges by number of children using the group_by() and summarize() funciton. Use the count n() function to count the number of individuals in each group. Add percentages to the respective groups using the mutate function. Make the name of the charges column 'mean_charges', the name of the count column 'count', and the name of the percentages column 'percentage'.</p>
+<p>Find the mean charges by number of children using the group_by() and summarize() funciton. Use the count n() function to count the number of individuals in each group. Add percentages to the respective groups using the mutate() function.</p>
 <ul>
-<li>Note: You will notice that there is a small number of individuals in the groups for 4 and 5 children. Due to the small sample size provided for these two groups (4 &amp; 5), it would be best to not make any assumptions about these groups when writing your conclusion. As you should notice, groups 4 and 5 combine, barely make up 3% of the data set.</li>
+<li>Note: Notice the number of individuals in each group. Is it reasonable to make any assumptions when the number of individuals in the group is small?</li>
 </ul>
 
 </div>
@@ -2301,7 +2270,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Use the geom_bar() function to vizualize whether or not there is a compelling difference in the charges blocked by number of children.</p>
+<p>Use the geom_bar() function to vizualize whether or not there is a compelling difference in the charges grouped by number of children.</p>
 <ul>
 <li>Note: The fill function will be necessary for this.</li>
 </ul>
@@ -2342,7 +2311,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>What can you conclude about the hypothesis that the more children an individual has the higher the bills? Do your findings agree or disagree? Individuals with which number of children have the highest mean insurance cost?</p>
+<p>Now that you have analyzed the data, what conclusion can you make about the number of dependents an individual has and insurance cost?</p>
 
 </div>
 </div>
@@ -2380,7 +2349,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The last variable we will be looking at is age. But, due to age not being grouped, we cannot look at the average charges per age since there is a large quantity of unique ages. But, we can look at the average age for each charge blocked. We can hypothesize that the 'High' charge blocked group will have a higher mean age than 'Medium', and 'Medium' a higher mean age than 'Low'. On your own you are going to test this hypothesis.</p>
+<p>Lastly, you will be looking at the numeric variable 'age'. Use R code to find the mean age in each charge grouped ('Low', 'Medium', 'High).</p>
 
 </div>
 </div>
@@ -2401,7 +2370,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Use the groupby() and summarize() function to find the average age for each blocked charge. Make the name of the average age column 'avg_age'.</p>
+<p>Use the groupby() and summarize() function to find the mean age for each grouped charge.</p>
 
 </div>
 </div>
@@ -2439,7 +2408,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, let us visualize the data. Use the geom_boxplot() function to find the mean age by each charge blocked.</p>
+<p>Now, let us visualize the data. Use the geom_boxplot() function to find the mean age by each charge grouped.</p>
 
 </div>
 </div>
@@ -2477,7 +2446,7 @@ The following objects are masked from &#39;package:base&#39;:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Which charge blocked group had the highest average age? Does this confirm or deny the hypothesis? Did our hypothesis correctly predict the 'Low' groups average age placement?</p>
+<p>Now that you have used the two methods to analyze the data, what conclusion can you make about the mean age in each charge grouped ('Low', 'Medium', 'High).</p>
 
 </div>
 </div>
